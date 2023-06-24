@@ -38,6 +38,8 @@ export default function BestSeller() {
       price: "$400",
     },
   ];
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
     <Box
@@ -46,7 +48,8 @@ export default function BestSeller() {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        height: "100vh",
+        pb: "50px",
+        height: isMobile?"100%":"100vh",
       }}
     >
       <Typography
@@ -61,10 +64,12 @@ export default function BestSeller() {
       >
         ⭐ Best Seller Products ⭐
       </Typography>
-      <Container>
-        <Grid container gap={2}>
+      <Container sx={{
+            overflow: "auto",
+        }} >
+        <Grid justifyContent={"center"} alignItems={"center"} container gap={2}>
           {data.map((product, index) => (
-            <Grid item xs={3.8}>
+            <Grid item xs={6} md ={3.8}>
               <Product
                 img={product.img}
                 title={product.title}
@@ -79,6 +84,8 @@ export default function BestSeller() {
 }
 
 const Product = ({ img, title, price }) => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <Box
       sx={{
@@ -88,7 +95,7 @@ const Product = ({ img, title, price }) => {
         p: "15px",
         borderRadius: "10px",
         border: "1px solid yellow",
-        borderRight: "none",
+        borderRight: !isMobile &&"none",
       }}
     >
       <Box sx={{

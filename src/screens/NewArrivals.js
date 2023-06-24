@@ -8,6 +8,7 @@ import {
   IconButton,
   useTheme,
   useMediaQuery,
+  ImageList,
 } from "@mui/material";
 import {
   AiOutlineRight,
@@ -19,7 +20,11 @@ import p1 from "../assets/p1.png";
 import p2 from "../assets/p2.png";
 import p3 from "../assets/p3.png";
 import p4 from "../assets/p4.png";
-
+import "react-horizontal-scrolling-menu/dist/styles.css";
+const getItems = () =>
+  Array(20)
+    .fill(0)
+    .map((_, ind) => ({ id: `element-${ind}` }));
 const data = [
   {
     img: p1,
@@ -35,6 +40,16 @@ const data = [
     img: p3,
     title: "Product 3",
     price: "$300",
+  },
+  {
+    img: p4,
+    title: "Product 4",
+    price: "$400",
+  },
+  {
+    img: p4,
+    title: "Product 4",
+    price: "$400",
   },
   {
     img: p4,
@@ -117,14 +132,33 @@ export default function NewArrivals() {
             />
           </Box>
         </IconButton>
-        {data.map((item, index) => (
-          <ListItems
-            key={index}
-            img={item.img}
-            title={item.title}
-            price={item.price}
-          />
-        ))}
+        <ImageList
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "row",
+            scrollbarWidth: "none" /* For Firefox */,
+            msOverflowStyle: "none",
+            overflow: "auto",
+            '&::-webkit-scrollbar': {
+                display: "none",
+            },
+            gridAutoFlow: "column",
+            gridTemplateColumns:
+              "repeat(auto-fit, minmax(160px,1fr)) !important",
+            gridAutoColumns: "minmax(160px, 1fr)",
+          }}
+        >
+          {data.map((item, index) => (
+            <ListItems
+              key={index}
+              img={item.img}
+              title={item.title}
+              price={item.price}
+            />
+          ))}
+        </ImageList>
         <IconButton onClick={() => handleScroll(100)}>
           <Box
             sx={{
@@ -157,6 +191,7 @@ const ListItems = ({ img, title, price }) => {
         borderRadius: "10px",
         pb: "20px",
         border: "1px solid #d3d3d3",
+        mr: "30px",
       }}
     >
       <Box
@@ -191,8 +226,8 @@ const ListItems = ({ img, title, price }) => {
             mt: "10px",
             backgroundColor: "yellow",
             borderRadius: "20px",
-            width: "100%",
             padding: "10px 20px",
+            width: "100%",
           }}
           variant="contained"
         >
